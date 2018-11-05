@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# 
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iirc.EnergyLimitsScheduling.SolverCli", "Iirc.EnergyLimitsScheduling.SolverCli\Iirc.EnergyLimitsScheduling.SolverCli.csproj", "{E784A0D3-7935-43AD-A5F2-392EED2FD163}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iirc.EnergyLimitsScheduling.Shared", "Iirc.EnergyLimitsScheduling.Shared\Iirc.EnergyLimitsScheduling.Shared.csproj", "{3E6D39FB-AE5E-4B30-B358-C86398599DFD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iirc.EnergyLimitsScheduling.DatasetGenerators", "Iirc.EnergyLimitsScheduling.DatasetGenerators\Iirc.EnergyLimitsScheduling.DatasetGenerators.csproj", "{F26A1381-9489-4F9E-A082-1B357F2326B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iirc.EnergyLimitsScheduling.Experiments", "Iirc.EnergyLimitsScheduling.Experiments\Iirc.EnergyLimitsScheduling.Experiments.csproj", "{38E7814D-F95E-4F0E-981B-8E10348106DC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E784A0D3-7935-43AD-A5F2-392EED2FD163}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E784A0D3-7935-43AD-A5F2-392EED2FD163}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E784A0D3-7935-43AD-A5F2-392EED2FD163}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E784A0D3-7935-43AD-A5F2-392EED2FD163}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E6D39FB-AE5E-4B30-B358-C86398599DFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E6D39FB-AE5E-4B30-B358-C86398599DFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E6D39FB-AE5E-4B30-B358-C86398599DFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E6D39FB-AE5E-4B30-B358-C86398599DFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F26A1381-9489-4F9E-A082-1B357F2326B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F26A1381-9489-4F9E-A082-1B357F2326B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F26A1381-9489-4F9E-A082-1B357F2326B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F26A1381-9489-4F9E-A082-1B357F2326B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38E7814D-F95E-4F0E-981B-8E10348106DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38E7814D-F95E-4F0E-981B-8E10348106DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38E7814D-F95E-4F0E-981B-8E10348106DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38E7814D-F95E-4F0E-981B-8E10348106DC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

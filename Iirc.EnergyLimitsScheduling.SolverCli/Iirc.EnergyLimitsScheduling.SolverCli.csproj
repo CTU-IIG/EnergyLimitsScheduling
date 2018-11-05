@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
+    <ProjectReference Include="..\Iirc.EnergyLimitsScheduling.Shared\Iirc.EnergyLimitsScheduling.Shared.csproj" />
+    <Reference Include="Iirc.Utils, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Iirc.Utils\Iirc.Utils\bin\Release\netcoreapp2.1\Iirc.Utils.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.2.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+</Project>
