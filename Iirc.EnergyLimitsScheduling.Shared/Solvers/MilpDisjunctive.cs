@@ -427,6 +427,11 @@ namespace Iirc.EnergyLimitsScheduling.Shared.Solvers
             this.model.SetObjective(this.vars.Makespan + 0, GRB.MINIMIZE);
         }
 
+        protected override double? GetLowerBound()
+        {
+            return this.model.ObjBound;
+        }
+
         protected override StartTimes GetStartTimes()
         {
             var startTimes = new StartTimes();

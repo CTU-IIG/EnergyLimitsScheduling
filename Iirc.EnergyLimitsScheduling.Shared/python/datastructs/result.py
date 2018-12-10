@@ -19,7 +19,8 @@ class Result:
         'status',
         'time_limit_reached',
         'running_time',
-        'start_times'
+        'start_times',
+        'lower_bound'
     ]
 
     def __init__(
@@ -27,17 +28,20 @@ class Result:
         status: Status,
         time_limit_reached: bool,
         running_time: timedelta,
-        start_times: Optional[Dict[Operation, float]]):
+        start_times: Optional[Dict[Operation, float]],
+        lower_bound: Optional[float]):
         self.status = status
         self.time_limit_reached = time_limit_reached
         self.running_time = running_time
         self.start_times = start_times
+        self.lower_bound = lower_bound
 
     def to_json(self) -> str:
         d = dict()
         d['Status'] = self.status
         d['TimeLimitReached'] = self.time_limit_reached
         d['RunningTime'] = utils.timedelta_to_str(self.running_time)
+        d['LowerBound'] = self.lower_bound
 
         if self.start_times is None:
             d['StartTimes'] = None
@@ -64,7 +68,8 @@ class Result:
             Status(result_raw['Status']),
             result_raw['TimeLimitReached'],
             utils.parse_timedelta(result_raw['RunningTime']),
-            start_times
+            start_times,
+            result_raw['LowerBound']
         )
 
     def makespan(self) -> Optional[float]:

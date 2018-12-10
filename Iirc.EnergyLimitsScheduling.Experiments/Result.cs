@@ -15,6 +15,8 @@ namespace Iirc.EnergyLimitsScheduling.Experiments
         public TimeSpan RunningTime { get; set; }
 
         public List<StartTimes.IndexedStartTime> StartTimes { get; set; }
+        
+        public double? LowerBound { get; set; }
 
         public static Result FromSolverResult(SolverResult solverResult)
         {
@@ -23,7 +25,8 @@ namespace Iirc.EnergyLimitsScheduling.Experiments
                 Status = solverResult.Status,
                 TimeLimitReached = solverResult.TimeLimitReached,
                 RunningTime = solverResult.RunningTime,
-                StartTimes = solverResult.StartTimes == null ? null : solverResult.StartTimes.ToIndexedStartTimes()
+                StartTimes = solverResult.StartTimes == null ? null : solverResult.StartTimes.ToIndexedStartTimes(),
+                LowerBound = solverResult.LowerBound
             };
         }
     }

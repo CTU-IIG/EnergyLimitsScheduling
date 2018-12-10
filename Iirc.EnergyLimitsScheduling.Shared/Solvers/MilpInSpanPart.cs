@@ -541,6 +541,24 @@
                 }
             }
         }
+        
+        protected override double? GetLowerBound()
+        {
+            switch (this.specializedSolverConfig.HorizonOptimizationStrategy)
+            {
+                case HorizonOptimizationStrategy.Whole:
+                    return this.model.ObjBound;
+
+                case HorizonOptimizationStrategy.Decreasing:
+                    var modelBound = this.model.ObjBound;
+                    return NumericComparer.Default.AreEqual(0.0, modelBound) ?
+                        (double?)null
+                        : modelBound + this.instance.MeteringIntervalStart(this.modelMeteringIntervals.LastMeteringIntervalIndex);
+
+                default:
+                    throw new ArgumentException($"Invalid optimization strategy {this.specializedSolverConfig.HorizonOptimizationStrategy}");
+            }
+        }
 
         protected override StartTimes GetStartTimes()
         {

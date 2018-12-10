@@ -42,6 +42,7 @@ namespace Iirc.EnergyLimitsScheduling.SolverCli
                 if (solverResult.Status == Status.Heuristic || solverResult.Status == Status.Optimal)
                 {
                     Console.WriteLine($"Makespan: {solverResult.StartTimes.Makespan}");
+                    Console.WriteLine($"Lower bound: {solverResult.LowerBound}");
                     Console.WriteLine(JsonConvert.SerializeObject(solverResult.StartTimes.ToIndexedStartTimes()));
                     // Console.WriteLine(JsonConvert.SerializeObject(solverConfig));
                     //Console.WriteLine(JsonConvert.SerializeObject(instance));

@@ -80,6 +80,11 @@ namespace Iirc.EnergyLimitsScheduling.Shared.Solvers
             File.Delete(this.instancePath);
             File.Delete(this.solverResultPath);
         }
+
+        protected override double? GetLowerBound()
+        {
+            return this.solverScriptResult.LowerBound;
+        }
         
         protected override StartTimes GetStartTimes()
         {
@@ -98,6 +103,8 @@ namespace Iirc.EnergyLimitsScheduling.Shared.Solvers
             public bool TimeLimitReached { get; set; }
 
             public List<StartTimes.IndexedStartTime> StartTimes { get; set; }
+            
+            public double? LowerBound { get; set; }
         }
     }
 }

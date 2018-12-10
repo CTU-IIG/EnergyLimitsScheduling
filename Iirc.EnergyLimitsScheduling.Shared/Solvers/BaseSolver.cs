@@ -48,6 +48,7 @@
 #endif
             }
             var timeLimitReached = this.TimeLimitReached();
+            var lowerBound = this.GetLowerBound();
             this.Cleanup();
             
             stopwatch.Stop();
@@ -56,7 +57,8 @@
                 Status = status,
                 StartTimes = startTimes,
                 TimeLimitReached = timeLimitReached,
-                RunningTime = stopwatch.Elapsed
+                RunningTime = stopwatch.Elapsed,
+                LowerBound = lowerBound
             };
         }
 
@@ -88,11 +90,16 @@
         protected virtual void CheckSolution(StartTimes startTimes)
         {
         }
+        
+        protected virtual double? GetLowerBound()
+        {
+            return null;
+        }
 
         protected abstract Status Solve();
         
         protected abstract StartTimes GetStartTimes();
-
+        
         protected abstract bool TimeLimitReached();
     }
 }

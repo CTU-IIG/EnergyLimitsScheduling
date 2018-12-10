@@ -106,7 +106,8 @@ solver_result = Result(
     cp_utils.get_result_status(solution),
     cp_utils.time_limit_reached(solution),
     timedelta(seconds=time.time() - start_time_solver),
-    start_times
+    start_times,
+    solution.get_objective_bounds()[0]
 )
 
 solver_result_path.write_text(solver_result.to_json())

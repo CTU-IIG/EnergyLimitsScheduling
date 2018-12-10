@@ -14,5 +14,7 @@ namespace Iirc.EnergyLimitsScheduling.Shared.Solvers
         public TimeSpan RunningTime { get; set; }
 
         public StartTimes StartTimes { get; set; }
+        
+        public double? LowerBound { get; set; }
     }
 }
