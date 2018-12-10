@@ -49,7 +49,8 @@ def _results_table_to_latex(
         solver_ids: List[str],
         solvers_display: Dict[str, str],
         group_params: List[str],
-        group_params_display: Dict[str, str]) -> str:
+        group_params_display: Dict[str, str],
+        best_value_fn='max') -> str:
     columns = group_params + solver_ids
     content_template = ' & '.join(['{' + column + '}' for column in columns]) + r'\\' + os.linesep
 
@@ -58,10 +59,15 @@ def _results_table_to_latex(
         [group_params_display[group_param] for group_param in group_params]
         + [solvers_display[solver_id] for solver_id in solver_ids]) + r'\\' + r'\midrule' + os.linesep
     for index, row in df.iterrows():
-        max_value = row[solver_ids].max()
+        if best_value_fn == 'max':
+            best_value = row[solver_ids].max()
+        elif best_value_fn == 'min':
+            best_value = row[solver_ids].min()
+        else:
+            raise Exception(f'Unknown best value fn "{best_value_fn}"')
         row_dict = row.to_dict()
         for solver_id in solver_ids:
-            if row_dict[solver_id] == max_value:
+            if row_dict[solver_id] == best_value:
                 row_dict[solver_id] = r'\textbf{{{value}}}'.format(value=row_dict[solver_id])
         tbl_content += content_template.format(**row_dict)
 
@@ -187,21 +193,42 @@ def main():
 
     # Construct pandas dataframe containing the results data.
     series = []
+    total_makespans = []
 
     # Params series.
     for param in args.group_params:
         series.append(pd.Series([group.params[param] for group in groups], name=param))
+        total_makespans.append(pd.Series([group.params[param] for group in groups], name=param))
 
-    # Per solver series.
+    # Which instances to ignore in total makespan computation (some solver does not have feasible solution)
+    ignore_instances_for_total_makespan = set()
     for solver_id in solver_ids:
-        solver_series = []
-        solver_metering_interval_iterations = []
         for group in groups:
-            num_optimals = 0
             for instance in group.instances:
                 result_path = _get_result_path(dataset_results_path, solver_id, instance.instance_filename)
                 if result_path.exists():
                     result = Result.from_json(result_path.read_text(), instance)
+                    if result.status != Status.Optimal and result.status != Status.Heuristic:
+                        ignore_instances_for_total_makespan.add(instance.instance_filename)
+                else:
+                    ignore_instances_for_total_makespan.add(instance.instance_filename)
+
+    # Per solver series.
+    for solver_id in solver_ids:
+        solver_series = []
+        solver_total_makespans = []
+        solver_metering_interval_iterations = []
+        for group in groups:
+            num_optimals = 0
+            total_makespan = 0
+            for instance in group.instances:
+                result_path = _get_result_path(dataset_results_path, solver_id, instance.instance_filename)
+                if result_path.exists():
+                    result = Result.from_json(result_path.read_text(), instance)
+                    if result.status == Status.Optimal or result.status == Status.Heuristic:
+                        if instance.instance_filename not in ignore_instances_for_total_makespan:
+                            total_makespan += int(result.makespan())
+
                     if result.status == Status.Optimal:
                         num_optimals += 1
 
@@ -218,36 +245,28 @@ def main():
                             left_boundary = makespan - (makespan % instance.length_metering_interval)
                         solver_metering_interval_iterations.append((right_boundary - left_boundary) / instance.length_metering_interval)
             solver_series.append(num_optimals)
-        # num_bins = int(math.ceil(int(max(solver_metering_interval_iterations)) / 10))
-        # plt.figure(figsize=(4,3))
-        # plt.hist(
-        #     solver_metering_interval_iterations,
-        #     bins=[i * 10 for i in range(0, num_bins + 1)],
-        #     rwidth=0.75)
-        # plt.title(solvers_display[solver_id])
-        # plt.xticks([5 + 10 * i for i in range(num_bins)])
-        # plt.xticks(
-        #     [5 + 10 * i for i in range(num_bins)],
-        #     ["[{0}, {1})".format(10 * i, 10 * (i + 1)) for i in range(num_bins)],
-        # )
-        # plt.xlabel("num. iterations")
-        # plt.ylabel("num. optimally solved instances")
-        # plt.tight_layout()
-        # plt.show()
+            solver_total_makespans.append(total_makespan)
         series.append(pd.Series(solver_series, name=solver_id, dtype=np.object))
+        total_makespans.append(pd.Series(solver_total_makespans, name=solver_id, dtype=np.object))
         
-    df = pd.concat(series, axis=1)
-    df = df.sort_values(by=args.group_params)
+    df_num_optimals = pd.concat(series, axis=1)
+    df_num_optimals = df_num_optimals.sort_values(by=args.group_params)
 
-    df_latex = _results_table_to_latex(df, solver_ids, solvers_display, args.group_params, group_params_display)
+    df_latex = _results_table_to_latex(df_num_optimals, solver_ids, solvers_display, args.group_params, group_params_display)
+    print(df_latex)
+
+    df_total_makespans = pd.concat(total_makespans, axis=1)
+    df_total_makespans = df_total_makespans.sort_values(by=args.group_params)
+
+    df_latex = _results_table_to_latex(df_total_makespans, solver_ids, solvers_display, args.group_params, group_params_display, 'min')
     print(df_latex)
 
     if args.results_graph_path is not None:
         _results_table_to_graph(
-            df, solver_ids, solvers_display, args.group_params, group_params_display, Path(args.results_graph_path).resolve())
+            df_num_optimals, solver_ids, solvers_display, args.group_params, group_params_display, Path(args.results_graph_path).resolve())
 
     html_file = Path('index.html').resolve()
-    html_file.write_text(df.to_html())
+    html_file.write_text(df_num_optimals.to_html() + df_total_makespans.to_html())
 
     webbrowser.open(str(html_file), new=2)
 
