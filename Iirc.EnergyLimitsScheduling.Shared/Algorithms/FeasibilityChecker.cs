@@ -16,9 +16,12 @@
 
         private SolverConfig solverConfig;
 
-        private FeasibilityStatus status;
 
         private NumericComparer comparer;
+
+        public FeasibilityStatus Status { get; private set; }
+        public Operation Operation { get; private set; }
+        public Operation NextOperation { get; private set; }
 
         public FeasibilityStatus Check(Instance instance, StartTimes startTimes, SolverConfig solverConfig)
         {
@@ -26,6 +29,9 @@
             this.startTimes = startTimes;
             this.solverConfig = solverConfig;
             this.comparer = NumericComparer.Default;
+
+            this.Operation = null;
+            this.NextOperation = null;
 
             var feasible =
                 this.EveryOperationHasStartTime()
@@ -41,10 +47,10 @@
 
             if (feasible)
             {
-                this.status = FeasibilityStatus.Feasible;
+                this.Status = FeasibilityStatus.Feasible;
             }
 
-            return this.status;
+            return this.Status;
         }
 
         private bool EveryOperationHasStartTime()
@@ -53,7 +59,7 @@
             {
                 if (this.startTimes.ContainsOperation(operation) == false)
                 {
-                    this.status = FeasibilityStatus.OperationHasNoStartTime;
+                    this.Status = FeasibilityStatus.OperationHasNoStartTime;
                     return false;
                 }
             }
@@ -71,7 +77,9 @@
                         this.startTimes[operation] + operation.ProcessingTime,
                         this.startTimes[nextOperation]))
                     {
-                        this.status = FeasibilityStatus.JobPrecedenceViolated;
+                        this.Operation = operation;
+                        this.NextOperation = nextOperation;
+                        this.Status = FeasibilityStatus.JobPrecedenceViolated;
                         return false;
                     }
                 }
@@ -94,7 +102,7 @@
                         this.startTimes[operation] + operation.ProcessingTime,
                         this.startTimes[nextOperation]))
                     {
-                        this.status = FeasibilityStatus.OverlappingOperations;
+                        this.Status = FeasibilityStatus.OverlappingOperations;
                         return false;
                     }
                 }
@@ -111,7 +119,7 @@
                     this.startTimes[operation] + operation.ProcessingTime,
                     this.instance.Horizon))
                 {
-                    this.status = FeasibilityStatus.OperationOutsideHorizon;
+                    this.Status = FeasibilityStatus.OperationOutsideHorizon;
                     return false;
                 }
             }
@@ -123,7 +131,7 @@
         {
             if (EnergyConsumption.AreEnergyLimitsSatisfied(this.instance, this.startTimes) == false)
             {
-                this.status = FeasibilityStatus.EnergyLimitViolated;
+                this.Status = FeasibilityStatus.EnergyLimitViolated;
                 return false;
             }
 
