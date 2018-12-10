@@ -41,6 +41,12 @@ for job in instance.jobs:
         operation_vars[operation] = model.interval_var(
             length=operation.processing_time,
             name='var_' + str(operation.id))
+        
+if solver_config['ValidStartTimes'] is not None:
+    for valid_start_time in solver_config['ValidStartTimes']:
+        operation = instance.jobs[valid_start_time["JobIndex"]].operations[valid_start_time["OperationIndex"]]
+        operation_var = operation_vars[operation]
+        operation_var.set_start((int(valid_start_time["StartTimeFrom"]), int(valid_start_time["StartTimeTo"])))
 
 # Can be changed by init start times.
 num_metering_intervals = instance.num_metering_intervals

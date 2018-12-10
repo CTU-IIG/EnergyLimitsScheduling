@@ -102,5 +102,13 @@ namespace Iirc.EnergyLimitsScheduling.Shared.Solvers
             public int OperationIndex { get; set; }
             public double StartTime { get; set; }
         }
+        
+        public struct IndexedStartTimeRange
+        {
+            public int JobIndex { get; set; }
+            public int OperationIndex { get; set; }
+            public double StartTimeFrom { get; set; }
+            public double StartTimeTo { get; set; }
+        }
     }
 }

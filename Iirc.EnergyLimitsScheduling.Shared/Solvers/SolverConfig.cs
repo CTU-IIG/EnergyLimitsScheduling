@@ -6,6 +6,7 @@ namespace Iirc.EnergyLimitsScheduling.Shared.Solvers
     using Iirc.EnergyLimitsScheduling.Shared.DataStructs;
     using Iirc.Utils.SolverFoundations;
 
+    [Serializable]
     public class SolverConfig : ISolverConfig
     {
         public SolverConfig()
@@ -28,6 +29,8 @@ namespace Iirc.EnergyLimitsScheduling.Shared.Solvers
         public List<StartTimes.IndexedStartTime> InitStartTimes { get; set; }
         
         public List<StartTimes.IndexedStartTime> FixedOrder { get; set; }
+        
+        public List<StartTimes.IndexedStartTimeRange> ValidStartTimes { get; set; }
         
         public bool ContinuousStartTimes { get; set; }
 
