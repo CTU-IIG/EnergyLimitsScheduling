@@ -159,7 +159,10 @@
             {
                 throw new ArgumentException("Solver cannot handle larger optimization window than 1 if continuous start times are required.");
             }
+        }
 
+        protected override void CheckConfigValidity()
+        {
             if (this.specializedSolverConfig.BigMObjectiveConstraints
                 && this.specializedSolverConfig.HorizonOptimizationStrategy != HorizonOptimizationStrategy.Whole)
             {
@@ -183,6 +186,12 @@
 
             this.vars.Overlap = new Dictionary<Operation, GRBVar[]>();
             this.vars.StartIn = new Dictionary<Operation, GRBVar[]>();
+
+
+            if (this.specializedSolverConfig.BigMObjectiveConstraints)
+            {
+                this.vars.HasOverlappingOperation = new Dictionary<int, GRBVar[]>();
+            }
 
             foreach (var operation in this.instance.AllOperations())
             {
@@ -222,12 +231,30 @@
                     this.vars.NonZeroOverlap[operation][meteringIntervalIndex].BranchPriority = 1000;
 
 
-                    if (this.IsSpannable(operation))
+                   if (this.IsSpannable(operation))
                     {
                         this.vars.StartIn[operation][meteringIntervalIndex] =
                             this.model.AddVar(0, 1, 0, GRB.BINARY,
                                 $"startIn_{operation.Id}{meteringIntervalIndex}");
                         this.vars.StartIn[operation][meteringIntervalIndex].BranchPriority = 2000;
+                    }
+                }
+            }
+
+            foreach (var machineIndex in this.instance.Machines())
+            {
+                if (this.specializedSolverConfig.BigMObjectiveConstraints)
+                {
+                    this.vars.HasOverlappingOperation[machineIndex] = new GRBVar[this.modelMeteringIntervals.Count];
+                }
+                
+                foreach (var meteringIntervalIndex in this.modelMeteringIntervals)
+                {
+                    if (this.specializedSolverConfig.BigMObjectiveConstraints)
+                    {
+                        this.vars.HasOverlappingOperation[machineIndex][meteringIntervalIndex] = 
+                            this.model.AddVar(0, 1, 0, GRB.BINARY,
+                                $"hasOverlappingOperation_{machineIndex}{meteringIntervalIndex}");
                     }
                 }
             }
@@ -246,20 +273,22 @@
                 foreach (var machineIndex in this.instance.Machines())
                 {
                     var machineOperations = this.instance.MachineOperations(machineIndex).ToArray();
-                    var sumProcessingTime = machineOperations.Sum(operation => operation.ProcessingTime);
-                    for (var meteringIntervalIndex = sumProcessingTime / this.instance.LengthMeteringInterval; meteringIntervalIndex <= this.modelMeteringIntervals.LastMeteringIntervalIndex; meteringIntervalIndex++)
+                    foreach (var meteringIntervalIndex in this.modelMeteringIntervals)
                     {
-                        var bigM = this.instance.MeteringIntervalEnd(meteringIntervalIndex);
-                        foreach (var operation in machineOperations)
-                        {
-                            model.AddConstr(
-                                this.instance.MeteringIntervalStart(meteringIntervalIndex)
-                                + machineOperations
-                                    .Quicksum(operationOther => this.vars.Overlap[operationOther][meteringIntervalIndex])
-                                <=
-                                this.vars.Obj + bigM * (1 - this.vars.NonZeroOverlap[operation][meteringIntervalIndex]),
-                                $"obj_{machineIndex}{meteringIntervalIndex}{operation.Id}");
-                        }
+                        model.AddConstr(
+                            meteringIntervalIndex * this.instance.LengthMeteringInterval * this.vars.HasOverlappingOperation[machineIndex][meteringIntervalIndex]
+                            + machineOperations
+                                .Quicksum(operation => this.vars.Overlap[operation][meteringIntervalIndex])
+                            <=
+                            this.vars.Obj,
+                            $"obj_{machineIndex}{meteringIntervalIndex}");
+                        
+                        model.AddConstr(
+                            machineOperations
+                                .Quicksum(operation => this.vars.NonZeroOverlap[operation][meteringIntervalIndex])
+                            <=
+                            this.instance.LengthMeteringInterval * this.vars.HasOverlappingOperation[machineIndex][meteringIntervalIndex],
+                            $"obj_{machineIndex}{meteringIntervalIndex}");
                     }
                 }
             }
@@ -630,6 +659,7 @@
             public Dictionary<Operation, GRBVar[]> OnBoundary { get; set; }
             public Dictionary<Operation, GRBVar[]> Overlap { get; set; }
             public Dictionary<Operation, GRBVar[]> StartIn { get; set; }
+            public Dictionary<int, GRBVar[]> HasOverlappingOperation { get; set; }
         }
 
         public enum HorizonOptimizationStrategy
