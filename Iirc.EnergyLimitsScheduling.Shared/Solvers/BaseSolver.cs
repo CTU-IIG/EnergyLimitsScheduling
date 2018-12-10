@@ -35,6 +35,7 @@
                 .FromObject(solverConfig.SpecializedSolverConfig)
                 .ToObject<SpecializedSolverConfig>(new JsonSerializer { DefaultValueHandling = DefaultValueHandling.Populate});
             
+            this.CheckConfigValidity();
             this.CheckInstanceValidity();
             
             var status = this.Solve();
@@ -73,6 +74,10 @@
         }
 
         protected virtual void CheckInstanceValidity()
+        {
+        }
+        
+        protected virtual void CheckConfigValidity()
         {
         }
         
