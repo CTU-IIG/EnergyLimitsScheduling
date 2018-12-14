@@ -1,4 +1,10 @@
-﻿namespace Iirc.EnergyLimitsScheduling.Experiments
+﻿// ---------------------------------------------------------------------------------------------------------------------
+// <copyright file="Program.cs" company="Czech Technical University in Prague">
+//   Copyright (c) 2018 Czech Technical University in Prague
+// </copyright>
+// ---------------------------------------------------------------------------------------------------------------------
+
+namespace Iirc.EnergyLimitsScheduling.Experiments
 {
     using System;
     using System.Collections.Generic;

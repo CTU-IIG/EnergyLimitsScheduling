@@ -1,16 +1,17 @@
-﻿namespace Iirc.EnergyLimitsScheduling.Shared.Solvers
+﻿// ---------------------------------------------------------------------------------------------------------------------
+// <copyright file="BaseSolver.cs" company="Czech Technical University in Prague">
+//   Copyright (c) 2018 Czech Technical University in Prague
+// </copyright>
+// ---------------------------------------------------------------------------------------------------------------------
+
+namespace Iirc.EnergyLimitsScheduling.Shared.Solvers
 {
     using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Linq;
-    using Gurobi;
     using Newtonsoft.Json.Linq;
     using Iirc.Utils.SolverFoundations;
     using Iirc.EnergyLimitsScheduling.Shared.Input;
     using System.Diagnostics;
     using Newtonsoft.Json;
-    using Iirc.EnergyLimitsScheduling.Shared.DataStructs;
 
     public abstract class BaseSolver<SpecializedSolverConfig> : ISolver<Instance, SolverConfig, SolverResult>
     {

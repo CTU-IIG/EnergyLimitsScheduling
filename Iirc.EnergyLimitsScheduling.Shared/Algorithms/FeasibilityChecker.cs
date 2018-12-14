@@ -1,4 +1,10 @@
-﻿namespace Iirc.EnergyLimitsScheduling.Shared.Algorithms
+﻿// ---------------------------------------------------------------------------------------------------------------------
+// <copyright file="FeasibilityChecker.cs" company="Czech Technical University in Prague">
+//   Copyright (c) 2018 Czech Technical University in Prague
+// </copyright>
+// ---------------------------------------------------------------------------------------------------------------------
+
+namespace Iirc.EnergyLimitsScheduling.Shared.Algorithms
 {
     using System;
     using System.Linq;

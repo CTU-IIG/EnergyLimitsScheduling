@@ -1,4 +1,10 @@
-﻿namespace Iirc.EnergyLimitsScheduling.Shared.Algorithms.EnergyLimitsRepair
+﻿// ---------------------------------------------------------------------------------------------------------------------
+// <copyright file="GreedyEarliestStartTime.cs" company="Czech Technical University in Prague">
+//   Copyright (c) 2018 Czech Technical University in Prague
+// </copyright>
+// ---------------------------------------------------------------------------------------------------------------------
+
+namespace Iirc.EnergyLimitsScheduling.Shared.Algorithms.EnergyLimitsRepair
 {
     using System.Collections.Generic;
     using System.Diagnostics;

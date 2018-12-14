@@ -1,4 +1,10 @@
-﻿namespace Iirc.EnergyLimitsScheduling.Shared.Input
+﻿// ---------------------------------------------------------------------------------------------------------------------
+// <copyright file="InstanceExtensions.cs" company="Czech Technical University in Prague">
+//   Copyright (c) 2018 Czech Technical University in Prague
+// </copyright>
+// ---------------------------------------------------------------------------------------------------------------------
+
+namespace Iirc.EnergyLimitsScheduling.Shared.Input
 {
     using System;
     using System.Collections.Generic;

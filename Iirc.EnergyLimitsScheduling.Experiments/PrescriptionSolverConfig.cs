@@ -1,10 +1,14 @@
+// ---------------------------------------------------------------------------------------------------------------------
+// <copyright file="PrescriptionSolverConfig.cs" company="Czech Technical University in Prague">
+//   Copyright (c) 2018 Czech Technical University in Prague
+// </copyright>
+// ---------------------------------------------------------------------------------------------------------------------
+
 namespace Iirc.EnergyLimitsScheduling.Experiments
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     using Iirc.EnergyLimitsScheduling.Shared.Solvers;
-    using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
     public class PrescriptionSolverConfig

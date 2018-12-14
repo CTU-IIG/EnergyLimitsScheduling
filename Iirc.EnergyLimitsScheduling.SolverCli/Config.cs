@@ -1,4 +1,10 @@
-﻿namespace Iirc.EnergyLimitsScheduling.SolverCli
+﻿// ---------------------------------------------------------------------------------------------------------------------
+// <copyright file="Config.cs" company="Czech Technical University in Prague">
+//   Copyright (c) 2018 Czech Technical University in Prague
+// </copyright>
+// ---------------------------------------------------------------------------------------------------------------------
+
+namespace Iirc.EnergyLimitsScheduling.SolverCli
 {
     using Iirc.EnergyLimitsScheduling.Shared.DataStructs;
     using Iirc.EnergyLimitsScheduling.Shared.Solvers;

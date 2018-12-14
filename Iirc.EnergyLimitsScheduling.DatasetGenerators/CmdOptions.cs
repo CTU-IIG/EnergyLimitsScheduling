@@ -1,3 +1,9 @@
+// ---------------------------------------------------------------------------------------------------------------------
+// <copyright file="CmdOptions.cs" company="Czech Technical University in Prague">
+//   Copyright (c) 2018 Czech Technical University in Prague
+// </copyright>
+// ---------------------------------------------------------------------------------------------------------------------
+
 namespace Iirc.EnergyLimitsScheduling.DatasetGenerators
 {
     using CommandLine;

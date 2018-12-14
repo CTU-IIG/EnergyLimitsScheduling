@@ -1,3 +1,9 @@
+// ---------------------------------------------------------------------------------------------------------------------
+// <copyright file="ExtendedEnergyLimits.cs" company="Czech Technical University in Prague">
+//   Copyright (c) 2018 Czech Technical University in Prague
+// </copyright>
+// ---------------------------------------------------------------------------------------------------------------------
+
 namespace Iirc.EnergyLimitsScheduling.Shared.Input.Writers
 {
     using System.Collections.Generic;
