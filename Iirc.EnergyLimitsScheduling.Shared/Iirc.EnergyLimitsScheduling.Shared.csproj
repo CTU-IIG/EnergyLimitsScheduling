@@ -3,20 +3,16 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Iirc.Utils, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Iirc.Utils\Iirc.Utils\bin\Release\netcoreapp2.1\Iirc.Utils.dll</HintPath>
-    </Reference>
-    <Reference Include="Iirc.Utils.Gurobi, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Iirc.Utils.Gurobi\Iirc.Utils.Gurobi\bin\Release\netcoreapp2.1\Iirc.Utils.Gurobi.dll</HintPath>
-    </Reference>
     <Reference Include="gurobi80.netstandard20, Version=8.0.0.0, Culture=neutral, PublicKeyToken=21e2c4b1860157bc">
       <HintPath>$(GUROBI_HOME)\lib\gurobi80.netstandard20.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2"/>
+    <PackageReference Include="Iirc.Utils" Version="0.1.0" />
+    <PackageReference Include="Iirc.Utils.Gurobi" Version="0.1.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="python\**\*" Link="python\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest"  />
+    <None Include="python\**\*" Link="python\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>
