@@ -15,7 +15,6 @@ You need the following
 
 The code is known to work on Fedora 28 and Debian Stretch operating systems.
 Also make sure that environment variable `GUROBI_HOME` exists and it points to the installation directory, .e.g., on GNU/Linux
-rojects
 ```bash
 $ echo $GUROBI_HOME
 /home/modosist/opt/gurobi800/linux64
