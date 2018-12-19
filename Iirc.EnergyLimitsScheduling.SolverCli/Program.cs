@@ -8,11 +8,7 @@ namespace Iirc.EnergyLimitsScheduling.SolverCli
 {
     using CommandLine;
     using System;
-    using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
-    using System.Diagnostics;
-    using Newtonsoft.Json.Linq;
     using Newtonsoft.Json;
     using Iirc.EnergyLimitsScheduling.Shared.Input.Readers;
     using Iirc.EnergyLimitsScheduling.Shared.Input;
@@ -27,7 +23,7 @@ namespace Iirc.EnergyLimitsScheduling.SolverCli
             return new Parser(parserConfig => parserConfig.HelpWriter = Console.Out)
                 .ParseArguments<CmdOptions>(args)
                 .MapResult(
-                    (CmdOptions opts) => Run(opts),
+                    opts => Run(opts),
                     errs => 1
                 );
         }
@@ -49,8 +45,14 @@ namespace Iirc.EnergyLimitsScheduling.SolverCli
                     Console.WriteLine($"Makespan: {solverResult.StartTimes.Makespan}");
                     Console.WriteLine($"Lower bound: {solverResult.LowerBound}");
                     Console.WriteLine(JsonConvert.SerializeObject(solverResult.StartTimes.ToIndexedStartTimes()));
-                    // Console.WriteLine(JsonConvert.SerializeObject(solverConfig));
-                    //Console.WriteLine(JsonConvert.SerializeObject(instance));
+                }
+                else if (solverResult.Status == Status.Infeasible)
+                {
+                    Console.WriteLine($"The instance is proven to be infeasible.");
+                }
+                else if (solverResult.Status == Status.NoSolution)
+                {
+                    Console.WriteLine($"No solution was found.");
                 }
 
                 return 0;
