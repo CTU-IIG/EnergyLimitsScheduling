@@ -20,8 +20,6 @@ namespace Iirc.EnergyLimitsScheduling.SolverCli
 
         public string SolverName { get; set; }     
         
-        public int? RandomSeed { get; set; }     
-        
         public bool? WithEnergyLimits { get; set; }
         
         public bool? ContinuousStartTimes { get; set; }
