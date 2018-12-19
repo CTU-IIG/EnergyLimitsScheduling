@@ -102,18 +102,50 @@ namespace Iirc.EnergyLimitsScheduling.Shared.Solvers
             }
         }
 
+        /// <summary>
+        /// A start time of an operation.
+        /// </summary>
         public struct IndexedStartTime
         {
+            /// <summary>
+            /// Gets or sets the index of a job of the operation.
+            /// </summary>
             public int JobIndex { get; set; }
+            
+            /// <summary>
+            /// Gets or sets the index of the operation.
+            /// </summary>
             public int OperationIndex { get; set; }
+            
+            /// <summary>
+            /// Gets or sets the start time of the operation.
+            /// </summary>
             public double StartTime { get; set; }
         }
         
+        /// <summary>
+        /// A range of start times for an operation.
+        /// </summary>
         public struct IndexedStartTimeRange
         {
+            /// <summary>
+            /// Gets or sets the index of a job of the operation.
+            /// </summary>
             public int JobIndex { get; set; }
+            
+            /// <summary>
+            /// Gets or sets the index of the operation.
+            /// </summary>
             public int OperationIndex { get; set; }
+            
+            /// <summary>
+            /// Gets or sets the minimum start time.
+            /// </summary>
             public double StartTimeFrom { get; set; }
+            
+            /// <summary>
+            /// Gets or sets the maximum start time.
+            /// </summary>
             public double StartTimeTo { get; set; }
         }
     }

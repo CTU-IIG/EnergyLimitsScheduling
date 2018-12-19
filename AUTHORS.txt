@@ -1,0 +1,4 @@
+István Módos <istvan.modos@cvut.cz>, <modosist@fel.cvut.cz>
+Kiryl Kalodkin
+Přemysl Šůcha <suchap@fel.cvut.cz>
+Zdeněk Hanzálek <zdenek.hanzalek@cvut.cz>, <hanzalek@fel.cvut.cz>
