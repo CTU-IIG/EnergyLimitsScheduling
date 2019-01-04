@@ -111,6 +111,11 @@ def main():
         type=str,
         help='Path to the results directory.')
     parser.add_argument(
+        'experiment',
+        metavar='EXPERIMENT',
+        type=str,
+        help='The name of the experiment for which to perform analysis.')
+    parser.add_argument(
         'dataset',
         metavar='DATASET',
         type=str,
@@ -160,7 +165,7 @@ def main():
     dataset_path: Path = args.datasets_path / args.dataset
     instances = _load_instances(dataset_path)
 
-    dataset_results_path = args.results_path / args.dataset
+    dataset_results_path = args.results_path / args.experiment / args.dataset
 
     groups = _group_instances(args.group_params, instances)
 
