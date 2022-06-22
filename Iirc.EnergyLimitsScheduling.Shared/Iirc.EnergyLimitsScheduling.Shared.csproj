@@ -10,7 +10,7 @@
   <ItemGroup>
     <PackageReference Include="Iirc.Utils" Version="0.1.0" />
     <PackageReference Include="Iirc.Utils.Gurobi" Version="0.1.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
   <ItemGroup>
     <None Include="python\**\*" Link="python\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
